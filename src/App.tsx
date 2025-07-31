@@ -19,6 +19,18 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Disclaimer from "./pages/Disclaimer";
 import SuggestFeature from "./pages/SuggestFeature";
+// Feature Pages
+import AIBioGeneration from "./pages/features/AIBioGeneration";
+import FancyFontStyles from "./pages/features/FancyFontStyles";
+import SymbolLibrary from "./pages/features/SymbolLibrary";
+import TemplateCollection from "./pages/features/TemplateCollection";
+import LivePreview from "./pages/features/LivePreview";
+// Resource Pages
+import BioTemplates from "./pages/resources/BioTemplates";
+import StyleGuide from "./pages/resources/StyleGuide";
+import TipsAndTricks from "./pages/resources/TipsAndTricks";
+import Examples from "./pages/resources/Examples";
+import FAQ from "./pages/resources/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +55,18 @@ const App = () => (
             <Route path="/terms-conditions" element={<TermsConditions />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="/suggest-feature" element={<SuggestFeature />} />
+            {/* Feature Pages */}
+            <Route path="/features/ai-bio-generation" element={<AIBioGeneration />} />
+            <Route path="/features/fancy-font-styles" element={<FancyFontStyles />} />
+            <Route path="/features/symbol-library" element={<SymbolLibrary />} />
+            <Route path="/features/template-collection" element={<TemplateCollection />} />
+            <Route path="/features/live-preview" element={<LivePreview />} />
+            {/* Resource Pages */}
+            <Route path="/resources/bio-templates" element={<BioTemplates />} />
+            <Route path="/resources/style-guide" element={<StyleGuide />} />
+            <Route path="/resources/tips-and-tricks" element={<TipsAndTricks />} />
+            <Route path="/resources/examples" element={<Examples />} />
+            <Route path="/resources/faq" element={<FAQ />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1084,8 +1084,8 @@ export const FontSelector: React.FC<FontSelectorProps> = ({
   const generateNewFonts = async () => {
     setIsGenerating(true);
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Quick generation for better user experience
+    await new Promise(resolve => setTimeout(resolve, 200));
 
     // Randomly select 6 new font styles to replace the last 3 existing ones + add 3 more
     const shuffledNewFonts = [...newFontStyles].sort(() => Math.random() - 0.5);

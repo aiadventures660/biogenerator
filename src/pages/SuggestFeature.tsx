@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Header } from "@/components/Header";
 import Footer from "@/components/ui/footer";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 import emailjs from 'emailjs-com';
 
 const SERVICE_ID = 'service_wjxfaub';
@@ -11,6 +12,7 @@ const TEMPLATE_ID = 'template_zdlu49z';
 const PUBLIC_KEY = 'gsYdyqM9MNy1AzcZ7';
 
 const SuggestFeature: React.FC = () => {
+  const { darkMode } = useDarkMode();
   const [suggestion, setSuggestion] = React.useState('');
   const [submitted, setSubmitted] = React.useState(false);
   const handleSuggestionSubmit = (e: React.FormEvent) => {
@@ -32,7 +34,7 @@ const SuggestFeature: React.FC = () => {
     );
   };
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className={`min-h-screen flex flex-col transition-all duration-300 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30'}`}>
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent text-center">Suggest a Feature</h1>

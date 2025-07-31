@@ -80,8 +80,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ onSelectTemp
   const generateNewTemplates = async () => {
     setIsGenerating(true);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Quick generation for better user experience
+    await new Promise(resolve => setTimeout(resolve, 200));
     
     const newTemplates = baseTemplates.map(baseTemplate => {
       const randomIndex = Math.floor(Math.random() * baseTemplate.templates.length);

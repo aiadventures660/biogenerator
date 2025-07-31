@@ -4,10 +4,14 @@ import { Users, Target, Heart, Zap, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
 import { Header } from "@/components/Header";
+import Footer from "@/components/ui/footer";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 const AboutUs = () => {
+  const { darkMode } = useDarkMode();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
+    <div className={`min-h-screen transition-all duration-300 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30'}`}>
       <Header />
       
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -20,9 +24,9 @@ const AboutUs = () => {
           <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
             About Us
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             We're passionate about helping people express themselves creatively on social media. 
-            Our mission is to make Instagram bio creation fun, easy, and inspiring for everyone.
+            Our mission is to make bio creation fun, easy, and inspiring for everyone.
           </p>
         </div>
 
@@ -35,7 +39,7 @@ const AboutUs = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 To empower individuals and businesses to create compelling Instagram bios that 
                 truly represent their personality, brand, and aspirations. We believe everyone 
                 deserves to have a bio that stands out and connects with their audience.
@@ -51,7 +55,7 @@ const AboutUs = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
                   Creativity and self-expression
@@ -86,33 +90,33 @@ const AboutUs = () => {
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mx-auto mb-3">
                   <Users className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold text-gray-800 mb-2">User-Focused</h4>
-                <p className="text-sm text-gray-600">Every feature is designed with our users' needs and creativity in mind.</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">User-Focused</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Every feature is designed with our users' needs and creativity in mind.</p>
               </div>
               
               <div className="text-center">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold text-gray-800 mb-2">AI-Powered</h4>
-                <p className="text-sm text-gray-600">Advanced AI technology that understands trends and personal style.</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">AI-Powered</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Advanced AI technology that understands trends and personal style.</p>
               </div>
               
               <div className="text-center">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-3">
                   <Heart className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold text-gray-800 mb-2">Community-Driven</h4>
-                <p className="text-sm text-gray-600">Built with feedback from our amazing community of users.</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Community-Driven</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Built with feedback from our amazing community of users.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Join Our Community</h3>
-          <p className="text-gray-600 mb-6">
-            Thousands of users trust us daily to create amazing Instagram bios. 
+        <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-8">
+          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Join Our Community</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Thousands of users trust us daily to create amazing social media bios. 
             Be part of our growing community of creative individuals and businesses.
           </p>
           <Link to="/" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors">
@@ -120,6 +124,7 @@ const AboutUs = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

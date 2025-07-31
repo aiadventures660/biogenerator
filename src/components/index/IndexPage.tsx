@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Type, Hash, Palette, Lightbulb, Wand2, Star } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { TubelightNavbar } from "@/components/TubelightNavbar";
@@ -16,17 +16,9 @@ export const IndexPage = () => {
   const [bioText, setBioText] = useState('');
   const [selectedFont, setSelectedFont] = useState('normal');
   const [activeSection, setActiveSection] = useState('ai');
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
   const { toast } = useToast();
   const characterLimit = 150;
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
 
   const { navItems, handleNavClick } = useIndexNavigation(setActiveSection);
 
@@ -63,7 +55,7 @@ export const IndexPage = () => {
       <Header />
       
       <div className="container mx-auto px-3 lg:px-4 py-4 lg:py-8 max-w-7xl">
-        <HomeHeader darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+        <HomeHeader />
         <QuickLinksSection />
         
         <TubelightNavbar 

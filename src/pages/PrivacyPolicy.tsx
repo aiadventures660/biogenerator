@@ -5,10 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
 import { Header } from "@/components/Header";
 import Footer from "@/components/ui/footer";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 const PrivacyPolicy = () => {
+  const { darkMode } = useDarkMode();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/30 to-teal-50/30">
+    <div className={`min-h-screen transition-all duration-300 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-slate-50 via-green-50/30 to-teal-50/30'}`}>
       <Header />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Link to="/" className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 mb-6">
@@ -23,10 +26,10 @@ const PrivacyPolicy = () => {
               Privacy Policy
             </h1>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Your privacy is important to us. This policy explains how we collect, use, and protect your information.
           </p>
-          <p className="text-sm text-gray-500 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
 
         <div className="space-y-8">
@@ -36,8 +39,8 @@ const PrivacyPolicy = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Information You Provide</h4>
-                <ul className="list-disc list-inside space-y-1 text-gray-600 text-sm">
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Information You Provide</h4>
+                <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 text-sm">
                   <li>Text input for bio generation</li>
                   <li>Style preferences and customization choices</li>
                   <li>Optional feedback and contact information</li>
@@ -45,8 +48,8 @@ const PrivacyPolicy = () => {
               </div>
               
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Automatically Collected Information</h4>
-                <ul className="list-disc list-inside space-y-1 text-gray-600 text-sm">
+                <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Automatically Collected Information</h4>
+                <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 text-sm">
                   <li>Device information and browser type</li>
                   <li>Usage patterns and feature interactions</li>
                   <li>Anonymous analytics data</li>
@@ -60,7 +63,7 @@ const PrivacyPolicy = () => {
               <CardTitle>How We Use Your Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full mt-2"></span>
                   <span>Generate personalized Instagram bios based on your input</span>
@@ -86,11 +89,11 @@ const PrivacyPolicy = () => {
               <CardTitle>Data Protection</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 We implement appropriate security measures to protect your personal information against 
                 unauthorized access, alteration, disclosure, or destruction.
               </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-teal-500 rounded-full mt-2"></span>
                   <span>Data encryption in transit and at rest</span>
@@ -112,8 +115,8 @@ const PrivacyPolicy = () => {
               <CardTitle>Your Rights</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 mb-4">You have the right to:</p>
-              <ul className="space-y-2 text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">You have the right to:</p>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
                   <span>Access the personal information we hold about you</span>
@@ -139,7 +142,7 @@ const PrivacyPolicy = () => {
               <CardTitle>Contact Us</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 If you have any questions about this Privacy Policy or our data practices, 
                 please contact us at <a href="mailto:privacy@biogenerator.com" className="text-green-600 hover:underline">privacy@biogenerator.com</a>
               </p>

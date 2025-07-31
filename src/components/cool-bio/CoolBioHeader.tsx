@@ -1,15 +1,12 @@
 
 import React from 'react';
-import { ArrowLeft, Lightbulb, Moon, Sun } from 'lucide-react';
+import { ArrowLeft, Lightbulb } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
-interface CoolBioHeaderProps {
-  darkMode: boolean;
-  onToggleDarkMode: () => void;
-}
-
-export const CoolBioHeader: React.FC<CoolBioHeaderProps> = ({ darkMode, onToggleDarkMode }) => {
+export const CoolBioHeader: React.FC = () => {
+  const { darkMode } = useDarkMode();
   return (
     <div className="mb-6 lg:mb-8 px-4">
       <Link to="/" className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 mb-4 lg:mb-6">
@@ -31,16 +28,6 @@ export const CoolBioHeader: React.FC<CoolBioHeaderProps> = ({ darkMode, onToggle
           Get inspired with creative, unique, and trendy bio concepts for every personality and style.
         </p>
       </div>
-
-      <Button 
-        onClick={onToggleDarkMode} 
-        variant="outline" 
-        size="sm" 
-        className="mt-4 lg:mt-6 mx-auto block"
-      >
-        {darkMode ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
-        {darkMode ? 'Light' : 'Dark'} Mode
-      </Button>
     </div>
   );
 };

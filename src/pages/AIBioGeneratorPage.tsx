@@ -1,16 +1,18 @@
 
 import React, { useState } from 'react';
-import { Wand2, Sparkles, Zap, Brain, Moon, Sun, ArrowLeft } from 'lucide-react';
+import { Wand2, Sparkles, Zap, Brain, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from 'react-router-dom';
 import { AIBioGenerator } from "@/components/AIBioGenerator";
 import { Header } from "@/components/Header";
+import { BioCategoryNavbar } from "@/components/BioCategoryNavbar";
 import Footer from "@/components/ui/footer";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 const AIBioGeneratorPage = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode } = useDarkMode();
   const [generatedBio, setGeneratedBio] = useState('');
   const { toast } = useToast();
 
@@ -21,6 +23,7 @@ const AIBioGeneratorPage = () => {
   return (
     <div className={`min-h-screen transition-all duration-300 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-slate-50 via-cyan-50/30 to-blue-50/30'}`}>
       <Header />
+      <BioCategoryNavbar />
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
@@ -35,24 +38,14 @@ const AIBioGeneratorPage = () => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                AI Instagram Bio Generator
+                AI Social Bio Generator
               </h1>
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Harness the power of artificial intelligence to create unique, personalized Instagram bios. 
+              Harness the power of artificial intelligence to create unique, personalized social media bios. 
               Our AI bio generator creates custom content tailored to your personality, interests, and style.
             </p>
           </div>
-
-          <Button 
-            onClick={() => setDarkMode(!darkMode)} 
-            variant="outline" 
-            size="sm" 
-            className="mt-6 mx-auto block"
-          >
-            {darkMode ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
-            {darkMode ? 'Light' : 'Dark'} Mode
-          </Button>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -162,12 +155,12 @@ const AIBioGeneratorPage = () => {
           <Card className="shadow-lg border-0 bg-gradient-to-br from-white via-cyan-50/20 to-blue-50/20 dark:from-gray-800 dark:via-gray-800/50 dark:to-gray-700/50">
             <CardContent className="p-8">
               <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                Why Choose AI for Instagram Bio Generation?
+                Why Choose AI for Social Bio Generation?
               </h2>
               
               <div className="space-y-6 text-gray-700 dark:text-gray-300">
                 <p>
-                  Traditional bio writing can be time-consuming and challenging. Our AI Instagram bio generator 
+                  Traditional bio writing can be time-consuming and challenging. Our AI social bio generator 
                   leverages machine learning to understand what makes bios successful and creates personalized 
                   content that resonates with your target audience.
                 </p>

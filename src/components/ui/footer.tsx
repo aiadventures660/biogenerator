@@ -22,9 +22,10 @@ const Footer: React.FC = () => {
                 Bio Generator
               </span>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
-              Create stunning Instagram bios with AI generation, fancy fonts, symbols, and perfect formatting.
-            </p>
+                          <p className="text-gray-600 dark:text-gray-400 text-sm leading-6">
+              Create stunning social media bios with AI generation, fancy fonts, symbols, and perfect formatting.
+              Stand out with a bio that's uniquely you across all platforms.
+              </p>
             <div className="flex space-x-4">
               {[{
               icon: Facebook,
@@ -50,24 +51,72 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold tracking-tight mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">Features</h4>
             <ul className="space-y-4">
-              {["AI Bio Generation", "Fancy Font Styles", "Symbol Library", "Template Collection", "Live Preview"].map((feature, idx) => <li key={idx}>
-                  <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {feature}
-                  </a>
-                </li>)}
+              <li>
+                <Link to="/features/ai-bio-generation" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  AI Bio Generation
+                </Link>
+              </li>
+              <li>
+                <Link to="/features/fancy-font-styles" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Fancy Font Styles
+                </Link>
+              </li>
+              <li>
+                <Link to="/features/symbol-library" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Symbol Library
+                </Link>
+              </li>
+              <li>
+                <Link to="/features/template-collection" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Template Collection
+                </Link>
+              </li>
+              <li>
+                <Link to="/features/live-preview" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Live Preview
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-bold tracking-tight mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">Resources</h4>
             <ul className="space-y-4">
-              {["Bio Templates", "Style Guide", "Tips & Tricks", "Examples", "FAQ"].map((item, idx) => <li key={idx}>
-                  <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item}
-                  </a>
-                </li>)}
+              <li>
+                <Link to="/resources/bio-templates" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Bio Templates
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/style-guide" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Style Guide
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/tips-and-tricks" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Tips & Tricks
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/examples" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Examples
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/faq" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -110,7 +159,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-24 pt-8 border-t border-black/10 dark:border-gray-600/50 text-center">
           <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-            © {new Date().getFullYear()} Instagram Bio Generator. All rights reserved.
+            © {new Date().getFullYear()} Social Bio Generator. All rights reserved.
           </p>
         </div>
       </div>

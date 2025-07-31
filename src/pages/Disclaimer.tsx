@@ -5,10 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
 import { Header } from "@/components/Header";
 import Footer from "@/components/ui/footer";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 const Disclaimer = () => {
+  const { darkMode } = useDarkMode();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-red-50/30">
+    <div className={`min-h-screen transition-all duration-300 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-slate-50 via-orange-50/30 to-red-50/30'}`}>
       <Header />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Link to="/" className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 mb-6">
@@ -23,10 +26,10 @@ const Disclaimer = () => {
               Disclaimer
             </h1>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Important information about the use of our Instagram Bio Generator service and its limitations.
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Important information about the use of our Social Bio Generator service and its limitations.
           </p>
-          <p className="text-sm text-gray-500 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
 
         <div className="space-y-8">
@@ -35,8 +38,8 @@ const Disclaimer = () => {
               <CardTitle>General Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
-                The information and services provided by the Instagram Bio Generator are for general 
+              <p className="text-gray-600 dark:text-gray-300">
+                The information and services provided by the Social Bio Generator are for general 
                 informational and entertainment purposes only. While we strive to provide accurate and 
                 up-to-date content, we make no representations or warranties of any kind, express or 
                 implied, about the completeness, accuracy, reliability, suitability, or availability 
@@ -50,10 +53,10 @@ const Disclaimer = () => {
               <CardTitle>AI-Generated Content</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Our service uses artificial intelligence to generate Instagram bio suggestions. Please note:
               </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full mt-2"></span>
                   <span>AI-generated content may not always be appropriate for all audiences</span>
@@ -79,7 +82,7 @@ const Disclaimer = () => {
               <CardTitle>Third-Party Content and Links</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Our service may contain links to third-party websites or references to external content. 
                 These links are provided for convenience only. We do not endorse, control, or assume 
                 responsibility for the content, privacy policies, or practices of any third-party sites 
@@ -93,8 +96,8 @@ const Disclaimer = () => {
               <CardTitle>No Professional Advice</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
-                The Instagram Bio Generator is not intended to provide professional marketing, branding, 
+              <p className="text-gray-600 dark:text-gray-300">
+                The Social Bio Generator is not intended to provide professional marketing, branding, 
                 or business advice. The generated content should not be considered as professional 
                 recommendations. Users should consult with qualified professionals for specific advice 
                 related to their business or personal branding needs.
@@ -107,8 +110,8 @@ const Disclaimer = () => {
               <CardTitle>Limitation of Liability</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
-                Under no circumstances shall Instagram Bio Generator, its developers, or affiliates be 
+              <p className="text-gray-600 dark:text-gray-300">
+                Under no circumstances shall Social Bio Generator, its developers, or affiliates be 
                 liable for any direct, indirect, incidental, special, or consequential damages resulting 
                 from the use or inability to use our service, including but not limited to damages for 
                 loss of profits, goodwill, use, data, or other intangible losses.
@@ -121,10 +124,10 @@ const Disclaimer = () => {
               <CardTitle>Instagram and Social Media Guidelines</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Users are responsible for ensuring their bio content complies with:
               </p>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-red-500 rounded-full mt-2"></span>
                   <span>Instagram's Community Guidelines and Terms of Service</span>
@@ -150,7 +153,7 @@ const Disclaimer = () => {
               <CardTitle>Service Availability</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 We strive to maintain continuous service availability, but we do not guarantee uninterrupted 
                 access. The service may be temporarily unavailable due to maintenance, updates, or technical 
                 issues. We reserve the right to modify, suspend, or discontinue the service at any time without notice.
@@ -163,7 +166,7 @@ const Disclaimer = () => {
               <CardTitle>Contact Us</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 If you have any questions about this disclaimer, please contact us at 
                 <a href="mailto:support@biogenerator.com" className="text-orange-600 hover:underline ml-1">support@biogenerator.com</a>
               </p>
@@ -177,3 +180,4 @@ const Disclaimer = () => {
 };
 
 export default Disclaimer;
+
