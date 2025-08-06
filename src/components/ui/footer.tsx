@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
               </span>
             </div>
                           <p className="text-gray-600 dark:text-gray-400 text-sm leading-6">
-              Create stunning social media bios with AI generation, fancy fonts, symbols, and perfect formatting.
+              Create stunning Instagram bios with AI generation, fancy fonts, symbols, and perfect formatting.
               Stand out with a bio that's uniquely you across all platforms.
               </p>
             <div className="flex space-x-4">
@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-24 pt-8 border-t border-black/10 dark:border-gray-600/50 text-center">
           <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-            © {new Date().getFullYear()} Social Bio Generator. All rights reserved.
+            © {new Date().getFullYear()} Instagram Bio Generator. All rights reserved.
           </p>
         </div>
       </div>

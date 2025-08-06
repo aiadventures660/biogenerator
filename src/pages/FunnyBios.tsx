@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Copy, Laugh, Sparkles, Smile, ArrowLeft, RefreshCw, Loader2 } from 'lucide-react';
+import { Copy, Laugh, Sparkles, Smile, ArrowLeft, RefreshCw, Loader2, RotateCcw } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,105 +17,365 @@ const FunnyBios = () => {
   const [funnyBios, setFunnyBios] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [previouslyGeneratedBios, setPreviouslyGeneratedBios] = useState<Set<string>>(new Set());
 
-  // Default fallback bios in case AI generation fails
-  const fallbackBios = [
-    "🤪 Professional overthinker\n🍕 Pizza is my love language\n😴 Napping is my cardio",
-    "🦄 I'm not weird, I'm limited edition\n🍔 Relationship status: In love with food\n😂 My hobbies include laughing at my own jokes",
-    "🤡 I put the 'fun' in dysfunctional\n🧠 My brain has too many tabs open\n☕ Coffee first, adulting second",
-    "🐸 Kermit the Frog is my spirit animal\n🎭 Life's too short to be serious\n🍰 Cake is always the answer",
-    "🤖 Error 404: Motivation not found\n🎪 Certified mess but make it fashion\n🌮 Taco 'bout a good time",
-    "🦖 Rawr means I love you in dinosaur\n🎨 Painting my life with chaos\n🍿 Popcorn enthusiast & Netflix expert"
-  ];
+  // Helper function to normalize bio text for storage and comparison
+  const normalizeBio = (bio: string): string => {
+    return bio.trim().toLowerCase().replace(/\s+/g, ' ');
+  };
+
+  // Helper function to calculate edit distance between two strings
+  const calculateEditDistance = (str1: string, str2: string): number => {
+    const matrix = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
+    
+    for (let i = 0; i <= str1.length; i++) {
+      matrix[0][i] = i;
+    }
+    
+    for (let j = 0; j <= str2.length; j++) {
+      matrix[j][0] = j;
+    }
+    
+    for (let j = 1; j <= str2.length; j++) {
+      for (let i = 1; i <= str1.length; i++) {
+        const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+        matrix[j][i] = Math.min(
+          matrix[j][i - 1] + 1, // deletion
+          matrix[j - 1][i] + 1, // insertion
+          matrix[j - 1][i - 1] + indicator // substitution
+        );
+      }
+    }
+    
+    return matrix[str2.length][str1.length];
+  };
+
+  // Helper function to filter out previously generated bios with ultra-strict similarity detection
+  const getUniqueBios = (newBios: string[], previousBios: Set<string>): string[] => {
+    return newBios.filter(bio => {
+      const cleanBio = bio.trim().toLowerCase();
+      const normalizedBio = normalizeBio(bio);
+      
+      // Check for exact matches first (both original and normalized)
+      if (previousBios.has(bio.trim()) || previousBios.has(normalizedBio)) {
+        console.log(`Bio filtered: exact match found`);
+        return false;
+      }
+      
+      // Check for similar content by comparing key phrases - ULTRA STRICT
+      for (const prevBio of previousBios) {
+        const cleanPrevBio = prevBio.toLowerCase();
+        
+        // Extract meaningful words (remove emojis and common words) - expanded filter list
+        const commonWords = ['your', 'life', 'with', 'this', 'that', 'from', 'they', 'them', 'have', 'will', 'been', 'were', 'and', 'the', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use'];
+        
+        const bioWords = cleanBio.replace(/[^\w\s]/g, ' ').split(/\s+/)
+          .filter(word => word.length > 2 && !commonWords.includes(word));
+        
+        const prevBioWords = cleanPrevBio.replace(/[^\w\s]/g, ' ').split(/\s+/)
+          .filter(word => word.length > 2 && !commonWords.includes(word));
+        
+        // Calculate similarity percentage - EXTREMELY STRICT (20% instead of 30%)
+        const commonUniqueWords = bioWords.filter(word => prevBioWords.includes(word));
+        const totalUniqueWords = Math.max(bioWords.length, prevBioWords.length);
+        const similarity = totalUniqueWords > 0 ? (commonUniqueWords.length / totalUniqueWords) : 0;
+        
+        // If more than 20% similar, consider it a duplicate (was 30%)
+        if (similarity > 0.2) {
+          console.log(`Bio filtered due to high similarity: ${similarity.toFixed(2)} with previous bio`);
+          console.log(`Current bio words: ${bioWords.join(', ')}`);
+          console.log(`Previous bio words: ${prevBioWords.join(', ')}`);
+          console.log(`Common words: ${commonUniqueWords.join(', ')}`);
+          return false;
+        }
+        
+        // Check for similar phrases (2+ consecutive words instead of 3+)
+        const bioText = cleanBio.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ');
+        const prevBioText = cleanPrevBio.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ');
+        
+        const bioBigrams = [];
+        const prevBioBigrams = [];
+        
+        const bioWordsArray = bioText.split(' ').filter(word => word.length > 2);
+        const prevBioWordsArray = prevBioText.split(' ').filter(word => word.length > 2);
+        
+        // Create bigrams (2-word phrases) for more strict checking
+        for (let i = 0; i <= bioWordsArray.length - 2; i++) {
+          bioBigrams.push(bioWordsArray.slice(i, i + 2).join(' '));
+        }
+        
+        for (let i = 0; i <= prevBioWordsArray.length - 2; i++) {
+          prevBioBigrams.push(prevBioWordsArray.slice(i, i + 2).join(' '));
+        }
+        
+        // Check for common bigrams (2-word phrases)
+        const commonBigrams = bioBigrams.filter(bigram => 
+          prevBioBigrams.includes(bigram) && 
+          !commonWords.some(word => bigram.includes(word))
+        );
+        
+        if (commonBigrams.length > 0) {
+          console.log(`Bio filtered due to common 2-word phrases: ${commonBigrams.join(', ')}`);
+          return false;
+        }
+        
+        // Also check for trigrams (3-word phrases) as before
+        const bioTrigrams = [];
+        const prevBioTrigrams = [];
+        
+        // Create trigrams (3-word phrases)
+        for (let i = 0; i <= bioWordsArray.length - 3; i++) {
+          bioTrigrams.push(bioWordsArray.slice(i, i + 3).join(' '));
+        }
+        
+        for (let i = 0; i <= prevBioWordsArray.length - 3; i++) {
+          prevBioTrigrams.push(prevBioWordsArray.slice(i, i + 3).join(' '));
+        }
+        
+        // Check for common trigrams
+        const commonTrigrams = bioTrigrams.filter(trigram => prevBioTrigrams.includes(trigram));
+        if (commonTrigrams.length > 0) {
+          console.log(`Bio filtered due to common 3-word phrases: ${commonTrigrams.join(', ')}`);
+          return false;
+        }
+        
+        // Additional check: Look for similar sentence structures or key phrases
+        const bioSentences = bio.split(/[.!?\n]/).map(s => s.trim().toLowerCase()).filter(s => s.length > 10);
+        const prevBioSentences = prevBio.split(/[.!?\n]/).map(s => s.trim().toLowerCase()).filter(s => s.length > 10);
+        
+        for (const bioSentence of bioSentences) {
+          for (const prevSentence of prevBioSentences) {
+            // Check if sentences are too similar (edit distance)
+            const editDistance = calculateEditDistance(bioSentence, prevSentence);
+            const maxLength = Math.max(bioSentence.length, prevSentence.length);
+            const sentenceSimilarity = maxLength > 0 ? 1 - (editDistance / maxLength) : 0;
+            
+            if (sentenceSimilarity > 0.7) {
+              console.log(`Bio filtered due to similar sentence structure: ${sentenceSimilarity.toFixed(2)}`);
+              return false;
+            }
+          }
+        }
+      }
+      
+      return true;
+    });
+  };
+
+  // Helper function to format any bio to exactly 3 lines
+  const formatTo3Lines = (bio: string): string => {
+    if (!bio) return '';
+    
+    // Remove excessive emojis and clean up
+    let cleanBio = bio.trim();
+    
+    // Split by natural line breaks first
+    let lines = cleanBio.split(/\n+/).map(line => line.trim()).filter(line => line.length > 0);
+    
+    // If we already have exactly 3 lines, return as is
+    if (lines.length === 3) {
+      return lines.join('\n');
+    }
+    
+    // If we have fewer than 3 lines, we need to split or add content
+    if (lines.length < 3) {
+      // Try to split longer lines
+      let allLines: string[] = [];
+      
+      for (const line of lines) {
+        // If line is very long (>60 chars), try to split it
+        if (line.length > 60) {
+          // Look for natural break points (periods, semicolons, certain conjunctions)
+          const breakPoints = ['. ', '• ', '| ', ' - ', ' • '];
+          let found = false;
+          
+          for (const breakPoint of breakPoints) {
+            const parts = line.split(breakPoint);
+            if (parts.length >= 2) {
+              // Rejoin with line breaks
+              allLines.push(...parts.map((part, index) => {
+                if (index === 0) return part.trim();
+                return (part.startsWith(breakPoint.trim()) ? part : breakPoint.trim() + ' ' + part).trim();
+              }).filter(part => part.length > 0));
+              found = true;
+              break;
+            }
+          }
+          
+          if (!found) {
+            allLines.push(line);
+          }
+        } else {
+          allLines.push(line);
+        }
+      }
+      
+      lines = allLines;
+      
+      // Don't add generic content - let AI generate authentic content
+    }
+    
+    // If we have more than 3 lines, intelligently combine them
+    if (lines.length > 3) {
+      // Keep the first line, combine middle content, keep last if it's a good closer
+      const firstLine = lines[0];
+      const lastLine = lines[lines.length - 1];
+      const middleLines = lines.slice(1, -1);
+      
+      // Check if last line is a good closing line (short and has certain keywords)
+      const closingKeywords = ['dm', 'message', 'connect', 'follow', 'contact', 'reach out', 'fun', 'laughs', 'comedy'];
+      const isGoodClosing = lastLine.length < 50 && closingKeywords.some(keyword => 
+        lastLine.toLowerCase().includes(keyword)
+      );
+      
+      if (isGoodClosing) {
+        // Combine middle lines into one line
+        const middleLine = middleLines.join(' • ').trim();
+        lines = [firstLine, middleLine, lastLine];
+      } else {
+        // Take first 3 lines
+        lines = lines.slice(0, 3);
+      }
+    }
+    
+    // Final cleanup and return exactly 3 lines
+    const finalLines = lines.slice(0, 3);
+    return finalLines.join('\n');
+  };
 
   const generateFunnyBios = async () => {
     try {
       console.log('Attempting to generate AI funny bios...');
-      const { data, error } = await supabase.functions.invoke('generate-bio', {
-        body: {
-          interests: 'comedy, humor, entertainment, fun activities, pop culture',
-          profession: 'comedian, entertainer, content creator, funny person',
-          personality: 'witty, humorous, entertaining, self-deprecating, playful',
+      
+      // Use much more diverse parameter sets to ensure completely different content
+      const parameterSets = [
+        {
+          interests: 'comedy, humor, entertainment, fun activities, pop culture, memes',
+          profession: 'comedian, entertainer, content creator, funny person, joker',
+          personality: 'witty, humorous, entertaining, self-deprecating, playful, silly',
           tone: 'Funny',
           style: 'With Emojis',
-          bioType: 'funny'
+          bioType: 'funny',
+          format: '3-line',
+          instructions: 'Create exactly 3 lines for Instagram bio format. Focus on humor and entertainment.'
+        },
+        {
+          interests: 'sarcasm, wit, dark humor, stand-up comedy, funny movies, pranks',
+          profession: 'comedian, satirist, humorist, entertainer, meme creator',
+          personality: 'sarcastic, witty, clever, amusing, quirky, hilarious',
+          tone: 'Sarcastic',
+          style: 'Clever Text',
+          bioType: 'funny',
+          format: '3-line',
+          instructions: 'Create exactly 3 lines for Instagram bio format. Emphasize wit and sarcasm.'
+        },
+        {
+          interests: 'food humor, daily life comedy, relatable content, funny observations',
+          profession: 'food lover, everyday comedian, relatable content creator',
+          personality: 'relatable, funny, down-to-earth, amusing, entertaining',
+          tone: 'Relatable',
+          style: 'With Emojis',
+          bioType: 'funny',
+          format: '3-line',
+          instructions: 'Create exactly 3 lines for Instagram bio format. Focus on relatable humor.'
+        },
+        {
+          interests: 'animal humor, pet comedy, cute animals, funny pets, zoo life',
+          profession: 'animal lover, pet parent, zoo enthusiast, animal comedian',
+          personality: 'playful, animal-loving, cute, funny, adorable',
+          tone: 'Playful',
+          style: 'Animal Themed',
+          bioType: 'funny',
+          format: '3-line',
+          instructions: 'Create exactly 3 lines for Instagram bio format. Include animal-themed humor.'
+        },
+        {
+          interests: 'tech humor, nerd jokes, programming memes, geek culture, sci-fi',
+          profession: 'programmer, tech enthusiast, nerd, geek, developer',
+          personality: 'nerdy, tech-savvy, geeky, smart, funny',
+          tone: 'Nerdy',
+          style: 'Tech Humor',
+          bioType: 'funny',
+          format: '3-line',
+          instructions: 'Create exactly 3 lines for Instagram bio format. Focus on tech and nerd humor.'
         }
-      });
+      ];
 
-      console.log('Supabase response:', { data, error });
+      let allBios: string[] = [];
+      let attemptCount = 0;
+      const maxAttempts = parameterSets.length;
 
-      // Check if there's an actual error or invalid response
-      if (error) {
-        console.error('Supabase function error:', error);
-        setFunnyBios(fallbackBios);
+      // Try different parameter sets until we get enough unique bios
+      for (const params of parameterSets) {
+        attemptCount++;
+        console.log(`Attempt ${attemptCount}/${maxAttempts} with different parameters...`);
         
-        toast({
-          title: "Using Curated Funny Bios 😂",
-          description: "AI generation temporarily unavailable. Showing our handpicked bios.",
-          variant: "default",
+        const { data, error } = await supabase.functions.invoke('generate-bio', {
+          body: params
         });
-        
-        return fallbackBios;
-      }
 
-      if (!data?.bios || !Array.isArray(data.bios) || data.bios.length === 0) {
-        console.warn('Invalid or empty bios response:', data);
-        setFunnyBios(fallbackBios);
-        
-        toast({
-          title: "Using Curated Funny Bios 😂",
-          description: "AI generation returned empty results. Showing our handpicked bios.",
-          variant: "default",
-        });
-        
-        return fallbackBios;
-      }
-
-      // AI generation successful!
-      console.log('AI funny bios generated successfully:', data.bios);
-      const allBios = [...data.bios];
-      
-      if (allBios.length < 6) {
-        try {
-          const { data: data2, error: error2 } = await supabase.functions.invoke('generate-bio', {
-            body: {
-              interests: 'memes, jokes, sarcasm, comedy shows, funny movies',
-              profession: 'professional procrastinator, meme lord, chaos coordinator',
-              personality: 'sarcastic, witty, funny, relatable, entertaining',
-              tone: 'Funny',
-              style: 'With Emojis',
-              bioType: 'funny'
-            }
-          });
-
-          if (!error2 && data2?.bios && Array.isArray(data2.bios)) {
-            allBios.push(...data2.bios);
+        if (!error && data?.bios && Array.isArray(data.bios)) {
+          console.log(`Generated ${data.bios.length} bios in attempt ${attemptCount}`);
+          allBios.push(...data.bios);
+          
+          // Filter for unique bios after each attempt
+          const uniqueBios = getUniqueBios(allBios, previouslyGeneratedBios);
+          console.log(`Unique bios so far: ${uniqueBios.length}`);
+          
+          // If we have enough unique bios, we can stop
+          if (uniqueBios.length >= 6) {
+            console.log('Sufficient unique bios generated, stopping early');
+            break;
           }
-        } catch (secondError) {
-          // Silently continue with what we have
+        } else {
+          console.warn(`Attempt ${attemptCount} failed:`, error);
+        }
+        
+        // Small delay between attempts to avoid rate limiting
+        if (attemptCount < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 500));
         }
       }
 
-      const uniqueBios = Array.from(new Set(allBios)).slice(0, 6);
-      setFunnyBios(uniqueBios);
+      console.log(`Total bios collected: ${allBios.length}`);
+
+      // Filter out previously generated bios from all collected bios
+      let uniqueNewBios = getUniqueBios(allBios, previouslyGeneratedBios);
+      console.log(`Filtered to ${uniqueNewBios.length} unique bios`);
+
+      // Format all bios to exactly 3 lines and take up to 6 unique bios
+      const finalBios = uniqueNewBios.slice(0, 6).map(bio => formatTo3Lines(bio));
+      
+      if (finalBios.length === 0) {
+        toast({
+          title: "Bio Generation Failed",
+          description: "Unable to generate unique funny bios. Please try again.",
+          variant: "destructive",
+        });
+        return [];
+      }
+      
+      // Update the previously generated bios set
+      const newPreviouslyGenerated = new Set(previouslyGeneratedBios);
+      finalBios.forEach(bio => newPreviouslyGenerated.add(normalizeBio(bio)));
+      setPreviouslyGeneratedBios(newPreviouslyGenerated);
+      
+      setFunnyBios(finalBios);
       
       toast({
-        title: "Fresh Funny Bios Generated! 😂",
-        description: `Created ${uniqueBios.length} new AI-generated funny bios for you.`,
+        title: "Ultra-Unique Funny Bios Generated! 😂",
+        description: `Created ${finalBios.length} completely unique AI-generated funny bios. No repeats guaranteed!`,
       });
 
-      return uniqueBios;
+      return finalBios;
     } catch (error) {
-      // Use fallback bios if AI generation fails
-      setFunnyBios(fallbackBios);
-      
+      console.error('Bio generation failed:', error);
       toast({
-        title: "Using Curated Funny Bios 😂",
-        description: "Showing our handpicked hilarious bios for you.",
-        variant: "default",
+        title: "Bio Generation Failed",
+        description: "Unable to generate funny bios at the moment. Please try again.",
+        variant: "destructive",
       });
-
-      return fallbackBios;
+      return [];
     }
   };
 
@@ -135,6 +395,12 @@ const FunnyBios = () => {
     setIsRegenerating(true);
     await generateFunnyBios();
     setIsRegenerating(false);
+  };
+
+  // Function to reset bio history and generate fresh bios
+  const handleResetAndRegenerate = () => {
+    setPreviouslyGeneratedBios(new Set());
+    handleRegenerateBios();
   };
 
   const copyBio = (bio: string) => {
@@ -184,27 +450,47 @@ const FunnyBios = () => {
               <Badge variant="secondary" className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
                 Fresh & Hilarious
               </Badge>
+              {previouslyGeneratedBios.size > 0 && (
+                <Badge variant="outline" className="text-xs text-gray-500 dark:text-gray-400">
+                  {previouslyGeneratedBios.size} unique bios generated
+                </Badge>
+              )}
             </div>
             
-            <Button
-              onClick={handleRegenerateBios}
-              disabled={isRegenerating || isLoading}
-              variant="outline"
-              size="sm"
-              className="text-orange-600 border-orange-200 hover:bg-orange-50 dark:text-orange-400 dark:border-orange-600 dark:hover:bg-orange-900/20"
-            >
-              {isRegenerating ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Generate New
-                </>
+            <div className="flex gap-2">
+              {previouslyGeneratedBios.size > 0 && (
+                <Button
+                  onClick={handleResetAndRegenerate}
+                  disabled={isRegenerating || isLoading}
+                  variant="outline"
+                  size="sm"
+                  className="text-purple-600 border-purple-200 hover:bg-purple-50 dark:text-purple-400 dark:border-purple-600 dark:hover:bg-purple-900/20"
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset History
+                </Button>
               )}
-            </Button>
+              
+              <Button
+                onClick={handleRegenerateBios}
+                disabled={isRegenerating || isLoading}
+                variant="outline"
+                size="sm"
+                className="text-orange-600 border-orange-200 hover:bg-orange-50 dark:text-orange-400 dark:border-orange-600 dark:hover:bg-orange-900/20"
+              >
+                {isRegenerating ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Generate New
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
 
           {isLoading ? (

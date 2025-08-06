@@ -27,7 +27,7 @@ const Disclaimer = () => {
             </h1>
           </div>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Important information about the use of our Social Bio Generator service and its limitations.
+            Important information about the use of our Instagram Bio Generator service and its limitations.
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
@@ -39,7 +39,7 @@ const Disclaimer = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                The information and services provided by the Social Bio Generator are for general 
+                The information and services provided by the Instagram Bio Generator are for general 
                 informational and entertainment purposes only. While we strive to provide accurate and 
                 up-to-date content, we make no representations or warranties of any kind, express or 
                 implied, about the completeness, accuracy, reliability, suitability, or availability 
@@ -63,7 +63,7 @@ const Disclaimer = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full mt-2"></span>
-                  <span>Generated bios should be reviewed before use on your social media profiles</span>
+                  <span>Generated bios should be reviewed before use on your Instagram profile</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-2 h-2 bg-orange-500 rounded-full mt-2"></span>
@@ -97,7 +97,7 @@ const Disclaimer = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                The Social Bio Generator is not intended to provide professional marketing, branding, 
+                The Instagram Bio Generator is not intended to provide professional marketing, branding, 
                 or business advice. The generated content should not be considered as professional 
                 recommendations. Users should consult with qualified professionals for specific advice 
                 related to their business or personal branding needs.
@@ -111,7 +111,7 @@ const Disclaimer = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                Under no circumstances shall Social Bio Generator, its developers, or affiliates be 
+                Under no circumstances shall Instagram Bio Generator, its developers, or affiliates be 
                 liable for any direct, indirect, incidental, special, or consequential damages resulting 
                 from the use or inability to use our service, including but not limited to damages for 
                 loss of profits, goodwill, use, data, or other intangible losses.

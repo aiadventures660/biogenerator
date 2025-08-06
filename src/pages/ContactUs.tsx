@@ -26,7 +26,7 @@ const ContactUs = () => {
             Contact Us
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Have questions about our Social Bio Generator? We're here to help! 
+            Have questions about our Instagram Bio Generator? We're here to help! 
             Get in touch with our team for support, feedback, or business inquiries.
           </p>
         </div>

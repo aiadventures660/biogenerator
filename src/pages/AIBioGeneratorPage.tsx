@@ -38,11 +38,11 @@ const AIBioGeneratorPage = () => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                AI Social Bio Generator
+                AI Instagram Bio Generator
               </h1>
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Harness the power of artificial intelligence to create unique, personalized social media bios. 
+              Harness the power of artificial intelligence to create unique, personalized Instagram bios. 
               Our AI bio generator creates custom content tailored to your personality, interests, and style.
             </p>
           </div>
@@ -155,12 +155,12 @@ const AIBioGeneratorPage = () => {
           <Card className="shadow-lg border-0 bg-gradient-to-br from-white via-cyan-50/20 to-blue-50/20 dark:from-gray-800 dark:via-gray-800/50 dark:to-gray-700/50">
             <CardContent className="p-8">
               <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                Why Choose AI for Social Bio Generation?
+                Why Choose AI for Instagram Bio Generation?
               </h2>
               
               <div className="space-y-6 text-gray-700 dark:text-gray-300">
                 <p>
-                  Traditional bio writing can be time-consuming and challenging. Our AI social bio generator 
+                  Traditional bio writing can be time-consuming and challenging. Our AI Instagram bio generator 
                   leverages machine learning to understand what makes bios successful and creates personalized 
                   content that resonates with your target audience.
                 </p>

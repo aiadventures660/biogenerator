@@ -69,10 +69,10 @@ export const BioCategoryNavbar: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                   className={`
                     relative flex items-center gap-2 px-4 py-2.5 rounded-xl 
-                    transition-all duration-300 text-sm font-medium
+                    transition-all duration-300 text-sm font-medium z-10
                     ${isActive
-                      ? `bg-gradient-to-r ${category.gradient} text-white shadow-lg`
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50'
+                      ? `bg-gradient-to-r ${category.gradient} text-white shadow-lg relative`
+                      : 'text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50'
                     }
                   `}
                 >
@@ -82,10 +82,10 @@ export const BioCategoryNavbar: React.FC = () => {
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 rounded-xl bg-gradient-to-r opacity-20"
-                      style={{
-                        background: `linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to))`
-                      }}
+                      className={`absolute inset-0 rounded-xl bg-gradient-to-r ${category.gradient} opacity-30`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.3 }}
+                      transition={{ duration: 0.2 }}
                     />
                   )}
                 </motion.div>

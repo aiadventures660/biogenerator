@@ -33,6 +33,40 @@ export const AIBioGenerator: React.FC<AIBioGeneratorProps> = ({ onBioGenerated }
   const [generatedBios, setGeneratedBios] = useState<string[]>([]);
   const { toast } = useToast();
 
+  // Helper function to ensure bio has exactly 3 lines
+  const formatTo3Lines = (bio: string): string => {
+    // Remove extra whitespace and split into lines
+    const lines = bio.trim().split(/\n+/).filter(line => line.trim().length > 0);
+    
+    if (lines.length === 3) {
+      return lines.join('\n');
+    } else if (lines.length > 3) {
+      // Take first 3 lines if more than 3
+      return lines.slice(0, 3).join('\n');
+    } else if (lines.length === 2) {
+      // If only 2 lines, return them as is (don't add template content)
+      return lines.join('\n');
+    } else if (lines.length === 1) {
+      // Split single line or return as is
+      const singleLine = lines[0];
+      if (singleLine.length > 60) {
+        // Try to split long line into 3 parts
+        const words = singleLine.split(' ');
+        const third = Math.ceil(words.length / 3);
+        const line1 = words.slice(0, third).join(' ');
+        const line2 = words.slice(third, third * 2).join(' ');
+        const line3 = words.slice(third * 2).join(' ');
+        return [line1, line2, line3].filter(l => l.trim()).join('\n');
+      } else {
+        // Return single line as is (don't add template content)
+        return singleLine;
+      }
+    } else {
+      // Empty or invalid bio - return empty string instead of template
+      return '';
+    }
+  };
+
   const generateBio = async () => {
     if (!interests.trim() && !profession.trim()) {
       toast({
@@ -52,60 +86,41 @@ export const AIBioGenerator: React.FC<AIBioGeneratorProps> = ({ onBioGenerated }
           profession: profession.trim(),
           personality: personality.trim(),
           tone: selectedTone,
-          style: selectedStyle
+          style: selectedStyle,
+          format: '3-line',
+          instructions: 'Generate Instagram bios with exactly 3 lines. Each line should be concise and impactful. Use line breaks (\\n) to separate the lines. Make sure each bio has exactly 3 lines, no more, no less.'
         }
       });
 
       if (error) {
-        // Create fallback bios based on user input instead of showing error
-        const fallbackBios = [
-          `✨ ${profession || 'Creative soul'} | ${interests || 'Living life to the fullest'}\n💫 ${personality || 'Authentic & inspiring'}\n🌟 Making every day count`,
-          `🌙 ${interests || 'Passionate about life'} enthusiast\n💎 ${profession || 'Dream chaser'} with purpose\n🦋 ${personality || 'Spreading good vibes'}`,
-          `🔥 ${profession || 'Life explorer'} | ${personality || 'Bold & genuine'}\n✨ ${interests || 'Creating magic daily'}\n🚀 Always growing & evolving`
-        ];
-        
-        setGeneratedBios(fallbackBios);
         toast({
-          title: "Custom Bios Created! ✨",
-          description: "Created personalized bios based on your input!",
-          variant: "default",
+          title: "Bio Generation Failed",
+          description: "Unable to generate bios at the moment. Please try again.",
+          variant: "destructive",
         });
         return;
       }
 
       if (data?.bios && Array.isArray(data.bios)) {
-        setGeneratedBios(data.bios);
+        // Ensure all bios have exactly 3 lines
+        const formattedBios = data.bios.map(bio => formatTo3Lines(bio));
+        setGeneratedBios(formattedBios);
         toast({
-          title: "Bios Generated! ✨",
-          description: `Created ${data.bios.length} unique bio variations for you.`,
+          title: "Perfect 3-Line Bios Generated! ✨",
+          description: `Created ${formattedBios.length} unique 3-line bio variations for you.`,
         });
       } else {
-        const fallbackBios = [
-          `✨ ${profession || 'Creative soul'} | ${interests || 'Living life to the fullest'}\n💫 ${personality || 'Authentic & inspiring'}\n🌟 Making every day count`,
-          `🌙 ${interests || 'Passionate about life'} enthusiast\n💎 ${profession || 'Dream chaser'} with purpose\n🦋 ${personality || 'Spreading good vibes'}`,
-          `🔥 ${profession || 'Life explorer'} | ${personality || 'Bold & genuine'}\n✨ ${interests || 'Creating magic daily'}\n🚀 Always growing & evolving`
-        ];
-        
-        setGeneratedBios(fallbackBios);
         toast({
-          title: "Custom Bios Created! ✨",
-          description: "Created personalized bios based on your input!",
-          variant: "default",
+          title: "Bio Generation Failed",
+          description: "No bios were generated. Please try again with different inputs.",
+          variant: "destructive",
         });
       }
     } catch (error) {
-      // Create personalized fallback bios based on user input
-      const fallbackBios = [
-        `✨ ${profession || 'Creative soul'} | ${interests || 'Living life to the fullest'}\n💫 ${personality || 'Authentic & inspiring'}\n🌟 Making every day count`,
-        `🌙 ${interests || 'Passionate about life'} enthusiast\n💎 ${profession || 'Dream chaser'} with purpose\n🦋 ${personality || 'Spreading good vibes'}`,
-        `🔥 ${profession || 'Life explorer'} | ${personality || 'Bold & genuine'}\n✨ ${interests || 'Creating magic daily'}\n🚀 Always growing & evolving`
-      ];
-      
-      setGeneratedBios(fallbackBios);
       toast({
-        title: "Custom Bios Created! ✨",
-        description: "Created personalized bios based on your input!",
-        variant: "default",
+        title: "Bio Generation Failed",
+        description: "An error occurred while generating bios. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsGenerating(false);

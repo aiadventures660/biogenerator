@@ -25,7 +25,7 @@ const AboutUs = () => {
             About Us
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            We're passionate about helping people express themselves creatively on social media. 
+            We're passionate about helping people express themselves creatively on Instagram. 
             Our mission is to make bio creation fun, easy, and inspiring for everyone.
           </p>
         </div>
@@ -116,7 +116,7 @@ const AboutUs = () => {
         <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-8">
           <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Join Our Community</h3>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Thousands of users trust us daily to create amazing social media bios. 
+            Thousands of users trust us daily to create amazing Instagram bios. 
             Be part of our growing community of creative individuals and businesses.
           </p>
           <Link to="/" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors">
