@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!ads\\.txt|robots\\.txt|sitemap\\.xml|favicon\\.ico|.*\\.(png|jpg|jpeg|gif|svg|css|js|json)).*)",
+      "source": "/((?!api|_next|favicon.ico|ads.txt|robots.txt|sitemap.xml).*)",
       "destination": "/index.html"
     }
   ],
