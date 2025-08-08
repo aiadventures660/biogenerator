@@ -22,22 +22,24 @@
           "value": "1; mode=block"
         }
       ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/ads.txt",
-      "dest": "/ads.txt",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
+      "source": "/ads.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
     }
   ]
 }
