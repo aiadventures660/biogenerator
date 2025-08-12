@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-24 pt-8 border-t border-black/10 dark:border-gray-600/50 text-center">
           <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-            © {new Date().getFullYear()} Instagram Bio Generator. All rights reserved.
+              © {new Date().getFullYear()} Social Bio Generator. All rights reserved.
           </p>
         </div>
       </div>

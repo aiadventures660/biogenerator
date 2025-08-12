@@ -13,14 +13,15 @@ export const HomeHeader: React.FC = () => {
           <Sparkles className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
         </div>
                 <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6 animate-in slide-in-from-top duration-1000">
-          Instagram Bio Generator
+          Social Bio Generator
         </h1>
         <div className="hidden sm:block p-1.5 lg:p-2 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500">
           <Sparkles className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
         </div>
       </div>
               <p className="text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-        Create stunning Instagram bios with AI generation, fancy fonts, symbols, and perfect formatting. 
+        Create stunning social media bios for Instagram, Twitter, TikTok & more with our free AI-powered generator. 
+        Choose from cool, funny, and aesthetic bio templates with fancy fonts, symbols, and emojis. 
         Stand out with a bio that's uniquely you!
         </p>
       

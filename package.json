@@ -1,7 +1,14 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "social-bio-generator",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Free AI-powered social media bio generator for Instagram, Twitter, TikTok and more platforms. Create cool, funny, and aesthetic bios with fancy fonts and symbols.",
+  "keywords": ["bio generator", "social media", "Instagram bio", "Twitter bio", "TikTok bio", "AI generator", "cool bios", "funny bios", "aesthetic bios"],
+  "homepage": "https://biogenerator.info",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aiadventures660/biogenerator.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

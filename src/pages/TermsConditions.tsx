@@ -27,7 +27,7 @@ const TermsConditions = () => {
             </h1>
           </div>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Please read these terms and conditions carefully before using our Instagram Bio Generator service.
+            Please read these terms and conditions carefully before using our Social Bio Generator service.
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
@@ -39,7 +39,7 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                By accessing and using the Instagram Bio Generator service, you accept and agree to be bound by 
+                By accessing and using the Social Bio Generator service, you accept and agree to be bound by 
                 the terms and provision of this agreement. If you do not agree to abide by the above, 
                 please do not use this service.
               </p>
@@ -52,7 +52,7 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-600 dark:text-gray-300">
-                Permission is granted to temporarily use the Instagram Bio Generator for personal, 
+                Permission is granted to temporarily use the Social Bio Generator for personal, 
                 non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
               </p>
               <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
@@ -70,7 +70,7 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Our Instagram Bio Generator provides:
+                Our Social Bio Generator provides:
               </p>
               <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start gap-2">
@@ -116,8 +116,8 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                The materials on Instagram Bio Generator's website are provided on an 'as is' basis. 
-                Instagram Bio Generator makes no warranties, expressed or implied, and hereby disclaims 
+                The materials on Social Bio Generator's website are provided on an 'as is' basis. 
+                Social Bio Generator makes no warranties, expressed or implied, and hereby disclaims 
                 and negates all other warranties including without limitation, implied warranties or 
                 conditions of merchantability, fitness for a particular purpose, or non-infringement 
                 of intellectual property or other violation of rights.
@@ -131,10 +131,10 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                In no event shall Instagram Bio Generator or its suppliers be liable for any damages 
+                In no event shall Social Bio Generator or its suppliers be liable for any damages 
                 (including, without limitation, damages for loss of data or profit, or due to business 
                 interruption) arising out of the use or inability to use the materials on Instagram Bio 
-                Generator's website, even if Instagram Bio Generator or an authorized representative has 
+                Generator's website, even if Social Bio Generator or an authorized representative has 
                 been notified orally or in writing of the possibility of such damage.
               </p>
             </CardContent>
@@ -146,7 +146,7 @@ const TermsConditions = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 dark:text-gray-300">
-                Instagram Bio Generator may revise these terms of service for its website at any time 
+                Social Bio Generator may revise these terms of service for its website at any time 
                 without notice. By using this website, you are agreeing to be bound by the then current 
                 version of these terms of service.
               </p>
